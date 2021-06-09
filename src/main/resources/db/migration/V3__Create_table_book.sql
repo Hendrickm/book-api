@@ -1,4 +1,4 @@
-CREATE TABLE book_api.book (
+CREATE TABLE IF NOT EXISTS  book_api.book (
 	id serial NOT NULL,
 	title varchar NULL,
 	genre varchar NULL,
