@@ -17,36 +17,44 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.bookapi.entity.Author;
 import com.example.bookapi.service.AuthorService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import javassist.NotFoundException;
 
 @RestController
 @RequestMapping(value = "/author")
+@Api(value="Authors")
 public class AuthorController {
 	
 	@Autowired
 	private AuthorService service;
 	
 	@GetMapping
+	@ApiOperation(value="Returns a list of authors")
 	public ResponseEntity<List<Author>> findAll() {
 		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
+	@ApiOperation(value="Returns a single author")
 	public ResponseEntity<Author> findById(@PathVariable Long id) throws NotFoundException {
 		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
 	}
 	
 	@PostMapping
+	@ApiOperation(value="Saves an author")
 	public ResponseEntity<Author> save(@RequestBody Author author) {
 		return new ResponseEntity<>(service.save(author), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("{id}")
+	@ApiOperation(value="Updates an author")
 	public ResponseEntity<Author> update(@PathVariable Long id, @RequestBody Author author) throws NotFoundException {
 		return new ResponseEntity<>(service.update(id, author), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")
+	@ApiOperation(value="Deletes an author")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		service.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
