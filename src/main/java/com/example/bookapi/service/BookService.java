@@ -1,6 +1,7 @@
 package com.example.bookapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,10 @@ public class BookService {
 		return repository.findAll();
 	}
 
-	public Book findById(Long id) throws NotFoundException {
-		return repository.findById(id)
-				.orElseThrow(() -> new NotFoundException("Book not found"));
+	public Book findById(Long id) {
+		Optional<Book> book = repository.findById(id);
+		return book.isPresent() 
+				? book.get() : null;
 	}
 
 	public Book save(Book book) {

@@ -38,7 +38,11 @@ public class AuthorController {
 	@GetMapping("{id}")
 	@ApiOperation(value="Returns a single author")
 	public ResponseEntity<Author> findById(@PathVariable Long id) throws NotFoundException {
-		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+		Author author = service.findById(id);
+		if (author != null) {
+			return new ResponseEntity<>(author, HttpStatus.OK);			
+		} 
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping

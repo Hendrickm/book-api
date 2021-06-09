@@ -37,8 +37,12 @@ public class BookController {
 	
 	@GetMapping("{id}")
 	@ApiOperation(value="Returns a single book")
-	public ResponseEntity<Book> findById(@PathVariable Long id) throws NotFoundException {
-		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+	public ResponseEntity<Book> findById(@PathVariable Long id)  {
+		Book book = service.findById(id);
+		if (book != null) {
+			return new ResponseEntity<>(book, HttpStatus.OK);			
+		} 
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 	}
 	
 	@PostMapping
