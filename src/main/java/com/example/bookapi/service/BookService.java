@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.bookapi.entity.Book;
 import com.example.bookapi.repository.BookRepository;
 
+import javassist.NotFoundException;
+
 @Service
 public class BookService {
 	
@@ -18,16 +20,23 @@ public class BookService {
 		return repository.findAll();
 	}
 
-	public Book findById(Long id) {
-		return repository.getById(id);
+	public Book findById(Long id) throws NotFoundException {
+		return repository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Book not found"));
 	}
 
 	public Book save(Book book) {
 		return repository.save(book);
 	}
 	
-	public Book update(Long id, Book book) {
-		return repository.save(book);
+	public Book update(Long id, Book book) throws NotFoundException {
+		Book bookDb = repository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Book not found"));
+		bookDb.setTitle(book.getTitle());
+		bookDb.setGenre(book.getGenre());
+		bookDb.setAuthor(book.getAuthor());
+		bookDb.setReleaseYear(book.getReleaseYear());
+		return repository.save(bookDb);
 	}
 
 	public void delete(Long id) {

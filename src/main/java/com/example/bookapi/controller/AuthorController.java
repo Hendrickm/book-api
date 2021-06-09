@@ -14,36 +14,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bookapi.entity.Book;
-import com.example.bookapi.service.BookService;
+import com.example.bookapi.entity.Author;
+import com.example.bookapi.service.AuthorService;
 
 import javassist.NotFoundException;
 
 @RestController
-@RequestMapping(value = "/book")
-public class BookController {
+@RequestMapping(value = "/author")
+public class AuthorController {
 	
 	@Autowired
-	private BookService service;
+	private AuthorService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Book>> findAll() {
+	public ResponseEntity<List<Author>> findAll() {
 		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Book> findById(@PathVariable Long id) throws NotFoundException {
+	public ResponseEntity<Author> findById(@PathVariable Long id) throws NotFoundException {
 		return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Book> save(@RequestBody Book book) {
-		return new ResponseEntity<>(service.save(book), HttpStatus.CREATED);
+	public ResponseEntity<Author> save(@RequestBody Author author) {
+		return new ResponseEntity<>(service.save(author), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody Book book) throws NotFoundException {
-		return new ResponseEntity<>(service.update(id, book), HttpStatus.OK);
+	public ResponseEntity<Author> update(@PathVariable Long id, @RequestBody Author author) throws NotFoundException {
+		return new ResponseEntity<>(service.update(id, author), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")
